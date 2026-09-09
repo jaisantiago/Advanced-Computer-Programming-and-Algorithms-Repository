@@ -102,6 +102,87 @@ array([ 484,  529,  576,  625,  676,  729,  784,  841,  900,  961, 1024,
 above_mean.size
 15
 ````
+#### This concludes the Program Assignment 2 showcase. If you would like to access the file and see the code yourself, please click this link: https://github.com/jaisantiago/Advanced-Computer-Programming-and-Algorithms-Repository/blob/main/ECE2112_PA2_Santiago%2C%20Jai.ipynb
+
+
+# Advanced-Computer-Programming-and-Algorithms-PA-3
+#### In this section, the problems and solutions for Programming Assignment 3 which covers the topic, Module 3 - Pandas, will be discussed.
+## A. POSITIONAL AND LABEL-BASED SLICING
+#### Problem: (a) Display the shape and complete list of column names of cars. (b) Then, using positional slicing, create cars_6_to_10 containing rows 6 through 10 of the dataset, where the first data row is row 1. (c) From cars 6 to 10, display only the columns Model, mpg, cyl, hp, and gear, in that order.
+#### Clear Condition: The row selection in part (b) must use iloc; the column selection in part (c) must use column labels.
+#### Solution: Before anything, the file cars.csv was uploaded into the files of the notebook. Then to display its content, ```cars = pd.read_csv('cars.csv')``` was used. Then, ```cars.shape``` was utilized to get the shape of the table. 
+```
+cars.shape
+(32, 12)
+```
+#### Next, to specifically take rows 6 through 10 with row 0 being row 1 in the data row, a slicing function ```cars_6_to_10 = cars.iloc[5:10]``` was used.
+```
+cars_6_to_10 = cars.iloc[5:10]
+cars_6_to_10
+| Model     | mpg  | cyl | disp  | hp  | drat | wt   | qsec  | vs | am | gear | carb |
+|-----------|------|-----|-------|-----|------|------|-------|----|----|------|------|
+| Valiant   | 18.1 | 6   | 225.0 | 105 | 2.76 | 3.46 | 20.22 | 1  | 0  | 3    | 1    |
+| Duster 360| 14.3 | 8   | 360.0 | 245 | 3.21 | 3.57 | 15.84 | 0  | 0  | 3    | 4    |
+| Merc 240D | 24.4 | 4   | 146.7 | 62  | 3.69 | 3.19 | 20.00 | 1  | 0  | 4    | 2    |
+| Merc 230  | 22.8 | 4   | 140.8 | 95  | 3.92 | 3.15 | 22.90 | 1  | 0  | 4    | 2    |
+| Merc 280  | 19.2 | 6   | 167.6 | 123 | 3.92 | 3.44 | 18.30 | 1  | 0  | 4    | 4    |
+```
+#### Lastly, to only display Model, mpg, cyl, hp, and gear in cars_6_to_10, slicing was used once more but there is no specific index as we wanted to take all of the rows, but since we want a specific data for the columns, ```['Model', 'mpg','cyl','hp','gear']``` was input in the code.
+
+```
+cars_6_to_10.loc[:,['Model', 'mpg','cyl','hp','gear']]
+| Model      | mpg  | cyl | hp  | gear |
+|------------|------|-----|-----|------|
+| Valiant    | 18.1 | 6   | 105 | 3    |
+| Duster 360 | 14.3 | 8   | 245 | 3    |
+| Merc 240D  | 24.4 | 4   | 62  | 4    |
+| Merc 230   | 22.8 | 4   | 95  | 4    |
+| Merc 280   | 19.2 | 6   | 123 | 4    |
+```
+
+## B. MODEL LOOKUP
+#### Problem: Use Boolean indexing on the Model column to answer both requests. 
+ (a) Display the complete row for Toyota Corolla.                                                          
+ (b) For Pontiac Firebird, display only Model, mpg, hp, and wt
+#### Solution: Boolean indexing was used to create the line of codes for both a and b where in a the condition to find the row was ```cars['Model']=='Toyota Corolla'```, and in b it was ```(cars['Model']=='Pontiac Firebird')``` while specifying the columns ```['Model','mpg', 'hp','wt']```, displaying only these in the final table.
+```
+toyota = cars.loc[cars['Model']=='Toyota Corolla']
+toyota
+| Model          | mpg  | cyl | disp | hp | drat | wt    | qsec | vs | am | gear | carb |
+|----------------|------|-----|------|----|------|-------|------|----|----|------|------|
+| Toyota Corolla | 33.9 | 4   | 71.1 | 65 | 4.22 | 1.835 | 19.9 | 1  | 1  | 4    | 1    |
+```
+```
+pontiac = cars.loc[(cars['Model']=='Pontiac Firebird'), ['Model','mpg', 'hp','wt']]
+pontiac
+| Model           | mpg  | hp  | wt    |
+|-----------------|------|-----|-------|
+| Pontiac Firebird | 19.2 | 175 | 3.845 |
+```
+
+
+## C. MULTI-MODEL SUBSETTING
+#### Problem: Create a DataFrame named selected_cars containing only the records for three models: Datsun 710, Lotus Europa, and Ferrari Dino. For these records, retain only Model, mpg, cyl, hp, and gear. Select the rows by their model values rather than by row numbers. Display selected cars and its shape.
+#### Clear Condition: The final DataFrame must contain exactly three rows and five columns.
+#### Solution: Another Boolean condition was employed to get the rows asked by the problem. By using the boolean or ```|```, the rows for the models Datsun 710, Lotus Europa, and Ferrari Dino were selected. Then to get the specific their specific characteristics in the columns ```['Model','mpg','cyl','hp','gear']``` was utilized.
+```
+selected_cars = cars.loc[(cars['Model']=='Datsun 710') | (cars['Model']=='Lotus Europa') | (cars['Model']=='Ferrari Dino'), ['Model','mpg','cyl','hp','gear']]
+selected_cars
+| Model        | mpg  | cyl | hp  | gear |
+|--------------|------|-----|-----|------|
+| Datsun 710   | 22.8 | 4   | 93  | 3    |
+| Lotus Europa | 30.4 | 4   | 113 | 5    |
+| Ferrari Dino | 19.7 | 6   | 150 | 5    |
+```
+#### Upon checking using the code with ```selected_cars.shape```, it showed that it had three rows and five columns.
+```
+selected_cars.shape
+(3, 5)
+```
+
+#### This concludes the Program Assignment 3 showcase. If you would like to access the file and see the code yourself, please click this link: https://github.com/jaisantiago/Advanced-Computer-Programming-and-Algorithms-Repository/blob/main/ECE2112_PA1_Santiago%2C%20Jai.ipynb
+
 ##### README File Version History:
 ##### Aug. 26, 2026 - created README file and uploaded PA1 output with problems and explanation
 ##### Sept. 2, 2026 - updated README file to include PA2 output with problems and explanation and uploaded PA2
+##### Sept. 9, 2026 - updated README file to include PA3 output with problems and explanation and uploaded PA3
