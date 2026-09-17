@@ -182,7 +182,78 @@ selected_cars.shape
 
 #### This concludes the Program Assignment 3 showcase. If you would like to access the file and see the code yourself, please click this link: https://github.com/jaisantiago/Advanced-Computer-Programming-and-Algorithms-Repository/blob/main/ECE2112_PA3_Santaigo%2C_Jai.ipynb
 
+# Advanced-Computer-Programming-and-Algorithms-PA-4
+#### This part includes the problems and solutions for Programming Assignment 4 Module 4 (Data Wrangling and Visualization).
+
+## A. VISAYAS COMMUNICATION DATAFRAME
+#### Problem: Create a DataFrame named VisComm containing students whose Hometown is Visayas and whose Track is Communication. Retain only these columns, in the stated order: 
+```Name, Gender, Math, Electronics, Average```
+#### Clear Condition: Display the resulting DataFrame and its number of rows. Both filtering conditions must be applied to the source dataset before the columns are selected.
+#### Solution: Before anything, a new column called "Average" was created where the averages of the desired subjects are taken using the code 
+```VisComm['Average'] = VisComm[['Math','Electronics']].mean(axis=1)```.
+#### Then subsetting was used along with Boolean conditioning to only get students from Visayas with Communication as their track while only displaying the desired columns.
+```
+VisComm = VisComm.loc[(VisComm['Hometown'] == 'Visayas') & (VisComm['Track'] == 'Communication'), ['Name','Gender', 'Math', 'Electronics', 'Average']]
+```
+
+
+## B. VISAYAS FEMALE DATAFRAME
+#### Problem: Create a second DataFrame named VisFemale containing students whose Hometown is Visayas and whose Gender is Female. Retain only:
+```Name, Track, GEAS, Electronics, Average```
+#### Clear Condition: Display VisFemale. Then display only the rows of VisFemale whose Average is at least 60. Do not overwrite VisFemale when performing this second filter.
+#### Solution: Similar to A. VISAYAS COMMUNICATION DATAFRAME, an "Average" column was created which includes the mean of the desired subjects. 
+```
+VisFemale['Average'] = VisFemale[['GEAS','Electronics']].mean(axis=1)
+```
+#### After that, a combination between subsetting and Boolean conditioning was used to filter out other characteristics except students who are female and from Visayas and then displaying the other columns asked. 
+```
+VisFemale = VisFemale.loc[(VisFemale['Gender'] == 'Female') & (VisFemale['Hometown'] == 'Visayas'), ['Name','Track', 'GEAS', 'Electronics', 'Average']]
+```
+#### Lastly, to find those with an average of at least 60 without changing VisFemale, subsetting and Boolean conditioning was used once more, but without equating this to a new DataFrame.
+```
+VisFemale.loc[(VisFemale['Average'] == 60) | (VisFemale['Average'] > 60)]
+```
+
+## C. CATEGORY-AVERAGE VISUALIZATION
+#### Problem: Examine how the recorded Average differs across the three categorical features Track, Gender, and Hometown.
+##### a. For each feature, compute the mean of Average for every category using Pandas.
+##### b. Display the three summary tables.
+##### c. Create one figure containing three bar charts: mean Average by Track, by Gender, and by Hometown.
+##### d. Below the figure, write three concise statements identifying the category with the highest sample mean for each feature.
+#### Solution: First, an Average column was added to a duplicate dataset called "CatAve," where all the means from all subjects are taken. Then, the data are grouped by the three features using the syntax ```df.groupby(by="col")``` along with their respective averages.
+```
+AveTrack = CatAve.groupby('Track')['Average'].mean()
+```
+```
+AveGender = CatAve.groupby('Gender')['Average'].mean()
+```
+```
+AveHometown = CatAve.groupby('Hometown')['Average'].mean()
+```
+#### Now, to create a figure that can hold three bar charts, a subplot was utilized based on the syntax ```fig3, axes = plt.subplots(nrows=2,ncols=2)``` and the figure size was adjusted accordingly as well to show the categories clearly.
+```
+fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(16,6))
+```
+#### Next, to fill each graph with content, an axes was assigned to each category with their index being in the x-axis and the category and their value being the y-axis and their index. 
+```
+axes[0].bar(AveTrack.index, AveTrack.values)
+axes[1].bar(AveGender.index, AveGender.values)
+axes[2].bar(AveHometown.index, AveHometown.values)
+```
+#### Lastly, to show labels such as the title and the one for the y-axis, the ```.set()``` function was used.
+```
+axes[0].set(title='AveTrack', ylabel='Mean',
+xlabel='Categories')
+axes[1].set(title='AveGender', ylabel='Mean',
+xlabel='Categories')
+axes[2].set(title='AveHometown', ylabel='Mean',
+xlabel='Categories')
+```
+
+#### This concludes the Program Assignment 4 showcase. If you would like to access the file and see the code yourself, please click this link: https://github.com/jaisantiago/Advanced-Computer-Programming-and-Algorithms-Repository/blob/main/ECE2112_PA1_Santiago%2C%20Jai.ipynb
+
 ##### README File Version History:
 ##### Aug. 26, 2026 - created README file and uploaded PA1 output with problems and explanation
 ##### Sept. 2, 2026 - updated README file to include PA2 output with problems and explanation and uploaded PA2
 ##### Sept. 9, 2026 - updated README file to include PA3 output with problems and explanation and uploaded PA3
+##### Sept. 17, 2026 - updated README file to include PA3 output with problems and explanation and uploaded PA4
